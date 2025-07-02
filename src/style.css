@@ -1,0 +1,294 @@
+.stephood-title {
+    background: linear-gradient(180deg, #73E5BF 0%, #48AF8D 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-family: 'Oswald', Arial, sans-serif;
+}
+.stephood-headline {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 4rem;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #181818 0%, rgba(132, 132, 132, 0.80) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.stephood-highlight {
+    background: linear-gradient(180deg, #73E5BF 0%, #48AF8D 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stephood-desc {
+  color: #666;
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.custom-btn {
+  background: #6ee7c7;
+  color: #222;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px #6ee7c733;
+  padding: 0.75rem 4.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.custom-btn:hover, .custom-btn:focus {
+  background: #4fd1b3;
+  color: #111;
+  box-shadow: 0 6px 18px #6ee7c755;
+  text-decoration: none;
+}
+
+.stephood-icon {
+  font-size: 1.5rem;
+}
+.swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+  }
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+  }
+
+/* FAQ Section Styles */
+.faq-section {
+  max-width: 850px;
+  margin: 0 auto 4rem auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 2.5rem 2rem;
+  border: none;
+  box-shadow: none;
+}
+
+.faq-section .accordion-item {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.faq-section .accordion-button,
+.faq-section .accordion-button:focus {
+  border: none !important;
+  box-shadow: none !important;
+  background: #fff;
+  padding: 1.2rem;
+  border-bottom: 1px solid #4D4D4D!important;
+}
+
+.faq-section .accordion-item:not(:last-child) {
+  border-bottom: none !important;
+}
+
+
+.faq-title-highlight {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #6ee7c7;
+  letter-spacing: 1px;
+}
+
+.faq-list,
+.faq-item,
+.faq-question,
+.faq-toggle,
+.faq-answer {
+  all: unset;
+}
+
+/* Footer Section Styles */
+.stephood-footer {
+  background: #fff;
+  margin-top: 0;
+  padding-top: 2rem;
+}
+
+.footer-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.footer-highlight {
+  color: #6ee7c7;
+}
+
+
+.footer-follow-text {
+  color: #a0aec0;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.footer-social {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-social-icon {
+  margin: 0 0.5rem;
+  color: #222;
+  vertical-align: middle;
+}
+
+.footer-bottom {
+  background: #232126;
+  color: #a0aec0;
+  padding: 1.25rem 2rem 1.25rem 2rem;
+  font-size: 1rem;
+  margin-top: 2rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  justify-content: space-between;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  color: #a0aec0;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #6ee7c7;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer-title {
+    font-size: 2rem;
+  }
+  .footer-btns .footer-btn {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+
+/* Responsive adjustments for FAQ and Footer */
+@media (max-width: 992px) {
+  .faq-section {
+    max-width: 98vw;
+    padding: 2rem 0.5rem;
+  }
+  .footer-title,
+  .stephood-headline {
+    font-size: 2.2rem;
+  }
+  .faq-title-highlight,
+  .footer-highlight {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq-section {
+    max-width: 100vw;
+    padding: 1.2rem 0.2rem;
+  }
+  .stephood-headline,
+  .footer-title {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .faq-title-highlight,
+  .footer-highlight {
+    font-size: 1.5rem;
+  }
+  .custom-btn,
+  .footer-btns .footer-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+  }
+  .footer-content {
+    padding: 0 0.5rem;
+  }
+  .footer-social {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .footer-follow-text {
+    font-size: 1rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 0.7rem 0.2rem;
+    font-size: 0.95rem;
+  }
+  .footer-links {
+    gap: 1rem;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-section {
+    padding: 0.7rem 0.1rem;
+  }
+  .stephood-headline,
+  .footer-title {
+    font-size: 2.1rem;
+  }
+  .faq-title-highlight,
+  .footer-highlight {
+    font-size: 1.1rem;
+  }
+  .custom-btn,
+  .footer-btns .footer-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 10px;
+  }
+  .footer-social {
+    font-size: 1.1rem;
+  }
+  .footer-follow-text {
+    font-size: 0.95rem;
+  }
+  .footer-bottom {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.1rem;
+  }
+}
