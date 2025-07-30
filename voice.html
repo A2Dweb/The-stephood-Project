@@ -1,16 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>The Stephood Project- Voice</title>
-    <script
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Stephood Project - Voice</title>
+  <script
       id="retell-widget"
       src="https://dashboard.retellai.com/retell-widget.js"
-      data-public-key="key_xxxxxxxxxxxxxxxxxxxxx"
-      data-agent-id="agent_xxxxxxxxxxxxxxxxxxx"
+      data-public-key="key_77e8a0c328573f505410e21becaf"
+      data-agent-id="agent_b0cc0fee7562f7428c5318778a"
       data-agent-version="0"
       data-title="Chat with us!"
-    ></script>
-  </head>
-  <body></body>
+  ></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #ff6b35;
+      --primary-hover: #e55a2b;
+      --background: #fafafa;
+      --surface: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #e5e5e5;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-large: 0 8px 40px rgba(0, 0, 0, 0.12);
+      --border-radius: 12px;
+      --border-radius-large: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+      height: 100vh;
+      color: var(--text-primary);
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .back-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      text-decoration: none;
+      color: inherit; /* keeps it the same as surrounding text */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 40px;
+      color: var(--text-secondary);
+    }
+
+    .back-arrow:hover {
+      background: #e5e5e5;
+      transform: translateX(-2px);
+    }
+
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
+
+    .header-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 24px 180px 24px;
+      text-align: center;
+    }
+
+    .avatar-container {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 6px solid var(--surface);
+      box-shadow: var(--shadow-large);
+      transition: var(--transition);
+    }
+
+    .avatar.calling {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7), var(--shadow-large);
+      }
+      50% {
+        box-shadow: 0 0 0 20px rgba(255, 107, 53, 0.1), var(--shadow-large);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 53, 0), var(--shadow-large);
+      }
+    }
+
+    .user-info {
+      margin-bottom: 40px;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .status-section {
+      margin-bottom: 80px;
+    }
+
+    .status {
+      font-size: 16px;
+      color: var(--text-secondary);
+      padding: 12px 24px;
+      border-radius: var(--border-radius-large);
+      background: #f8f9fa;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .status.connecting {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+
+    .status.talking {
+      background: var(--primary-color);
+      color: white;
+      animation: gentle-pulse 2s infinite;
+    }
+
+    .status.ended {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+
+    @keyframes gentle-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .talking-indicator {
+      width: 8px;
+      height: 8px;
+      background: currentColor;
+      border-radius: 50%;
+      animation: talking-blink 1.5s infinite;
+    }
+
+    @keyframes talking-blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.4; }
+    }
+
+    .call-button {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #ff8a65 100%);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: var(--border-radius-large);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .call-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .call-button:hover::before {
+      left: 100%;
+    }
+
+    .call-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4);
+    }
+
+    .call-button:disabled {
+      background: #e0e0e0;
+      color: #9e9e9e;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .call-controls {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .control-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .control-btn:active {
+      transform: scale(0.95);
+    }
+
+    .mute-btn {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-primary);
+      backdrop-filter: blur(20px);
+    }
+
+    .mute-btn.muted {
+      background: rgba(255, 255, 255, 0.9);
+      color: #d32f2f;
+    }
+
+    .end-btn {
+      background: #ff4757;
+      color: white;
+    }
+
+    .end-btn:hover {
+      background: #ff3742;
+      transform: scale(1.05);
+    }
+
+    .control-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Desktop Responsive */
+    @media (min-width: 768px) {
+      .main-content {
+        padding: 60px 40px;
+      }
+
+      .avatar {
+        width: 280px;
+        height: 280px;
+      }
+
+      .name {
+        font-size: 32px;
+      }
+
+      .call-controls {
+        gap: 120px;
+        bottom: 80px;
+      }
+
+      .control-btn {
+        width: 80px;
+        height: 80px;
+        font-size: 28px;
+      }
+    }
+
+    /* Large Desktop */
+    @media (min-width: 1024px) {
+      .call-controls {
+        gap: 140px;
+      }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+      .header {
+        padding: 16px 20px;
+      }
+
+      .main-content {
+        padding: 20px 20px 140px 20px;
+      }
+
+      .avatar {
+        width: 160px;
+        height: 160px;
+      }
+
+      .name {
+        font-size: 24px;
+      }
+
+      .call-button {
+        padding: 14px 28px;
+        font-size: 15px;
+      }
+
+      .status-section {
+        margin-bottom: 60px;
+      }
+
+      .call-controls {
+        bottom: 60px;
+        gap: 60px;
+      }
+
+      .control-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 360px) {
+      .avatar {
+        width: 140px;
+        height: 140px;
+      }
+
+      .name {
+        font-size: 22px;
+      }
+
+      .call-controls {
+        gap: 50px;
+      }
+
+      .control-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 18px;
+      }
+    }
+
+    /* Loading animation */
+    .loading-dots {
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .loading-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: loading-bounce 1.4s infinite ease-in-out both;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes loading-bounce {
+      0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+     
+        <a href="/" class="back-arrow">‹</a>
+      <div class="header-info">
+        <img src="src/images/Avatar.jpeg" alt="Lisa Goodpaster" class="header-avatar" />
+        <span class="header-name">Lisa Goodpaster</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="avatar-container">
+        <img src="src/images/Avatar.jpeg" alt="Lisa Goodpaster" class="avatar" id="avatar">
+      </div>
+      
+      <div class="user-info">
+        <div class="name">Lisa Goodpaster</div>
+      </div>
+
+      <div class="status-section">
+        <div class="status" id="status">Ready to start call</div>
+      </div>
+
+      <button class="call-button" id="startCall">
+        Start Voice Call
+      </button>
+    </div>
+
+    <div class="call-controls" id="callControls" style="display: none;">
+      <button class="control-btn mute-btn" id="muteBtn" title="Toggle Mute">🎤</button>
+      <button class="control-btn end-btn" id="endBtn" title="End Call">📞</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { RetellWebClient } from 'https://cdn.skypack.dev/retell-client-js-sdk';
+
+    const retellWebClient = new RetellWebClient();
+    const startButton = document.getElementById('startCall');
+    const status = document.getElementById('status');
+    const avatar = document.getElementById('avatar');
+    const callControls = document.getElementById('callControls');
+    const endBtn = document.getElementById('endBtn');
+    const muteBtn = document.getElementById('muteBtn');
+
+    let isCallActive = false;
+    let isMuted = false;
+
+    // Enhanced status updates with better UX
+    function updateStatus(text, className = '') {
+      status.textContent = '';
+      status.className = `status ${className}`;
+      
+      if (className === 'connecting') {
+        status.innerHTML = `${text} <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>`;
+      } else if (className === 'talking') {
+        status.innerHTML = `<div class="talking-indicator"></div> ${text}`;
+      } else {
+        status.textContent = text;
+      }
+    }
+
+    startButton.addEventListener('click', async () => {
+      try {
+        isCallActive = true;
+        startButton.style.display = 'none';
+        callControls.style.display = 'flex';
+        updateStatus('Connecting', 'connecting');
+
+        const response = await fetch('https://api.retellai.com/v2/create-web-call', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer key_77e8a0c328573f505410e21becaf`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            agent_id: 'agent_8153f1e1832536d8fa08b5da6b'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const callData = await response.json();
+        await retellWebClient.startCall({
+          accessToken: callData.access_token,
+        });
+
+        avatar.classList.add('calling');
+        updateStatus('Call started', 'connecting');
+
+      } catch (error) {
+        console.error('Error starting call:', error);
+        updateStatus('Failed to connect', 'ended');
+        resetCallState();
+      }
+    });
+
+    endBtn.addEventListener('click', () => {
+      retellWebClient.stopCall();
+    });
+
+    muteBtn.addEventListener('click', () => {
+      toggleMute();
+    });
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      muteBtn.textContent = isMuted ? '🔇' : '🎤';
+      muteBtn.classList.toggle('muted', isMuted);
+      muteBtn.title = isMuted ? 'Unmute' : 'Mute';
+    }
+
+    function resetCallState() {
+      isCallActive = false;
+      callControls.style.display = 'none';
+      startButton.style.display = 'block';
+      avatar.classList.remove('calling');
+      isMuted = false;
+      muteBtn.textContent = '🎤';
+      muteBtn.classList.remove('muted');
+      muteBtn.title = 'Toggle Mute';
+    }
+
+    // Enhanced event handlers
+    retellWebClient.on("call_started", () => {
+      updateStatus('Connected', 'talking');
+    });
+
+    retellWebClient.on("call_ended", () => {
+      updateStatus('Call ended', 'ended');
+      resetCallState();
+      
+      // Auto-hide ended status after 3 seconds
+      setTimeout(() => {
+        if (!isCallActive) {
+          updateStatus('Ready to start call');
+        }
+      }, 3000);
+    });
+
+    retellWebClient.on("agent_start_talking", () => {
+      updateStatus('Lisa is speaking', 'talking');
+    });
+
+    retellWebClient.on("agent_stop_talking", () => {
+      updateStatus('Listening', 'talking');
+    });
+
+    retellWebClient.on("update", (update) => {
+      if (update.transcript) {
+        console.log('Transcript:', update.transcript);
+      }
+    });
+
+    retellWebClient.on("error", (error) => {
+      console.error("Call error:", error);
+      updateStatus('Connection error', 'ended');
+      resetCallState();
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (isCallActive) {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          toggleMute();
+        } else if (e.code === 'Escape') {
+          e.preventDefault();
+          retellWebClient.stopCall();
+        }
+      }
+    });
+
+    // Add visual feedback for interactions
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 150);
+      });
+    });
+  </script>
+</body>
 </html>
